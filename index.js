@@ -46,6 +46,7 @@ d3.json('ru_states_per_word.json')
         const draw_canvas = function () {
             let article_offset = $('main article').offset();
             $('main article span').each(function () {
+                debugger;
                 $(this)
             })
         };
