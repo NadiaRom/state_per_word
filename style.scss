@@ -1,0 +1,52 @@
+$emph_col: #7bbb40;
+$fontcol: #2b2c3b;
+$bgcol: #e9eac6;
+
+body {
+  font-family: 'Inconsolata', monospace;
+  line-height: 1.75;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  margin: 0;
+  color: $fontcol;
+  background-color: $bgcol;
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 2px solid $emph_col;
+}
+
+header {
+
+  margin: 3em 15% 3em 15%;
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1rem;
+    font-weight: normal;
+  }
+}
+
+main {
+  margin: 3em 15% 3em 15%;
+
+  nav {
+    position: sticky;
+    top: 0;
+  }
+
+  svg#text_line {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}

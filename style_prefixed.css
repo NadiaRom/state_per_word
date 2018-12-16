@@ -1,0 +1,36 @@
+body {
+  font-family: 'Inconsolata', monospace;
+  line-height: 1.75;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  margin: 0;
+  color: #2b2c3b;
+  background-color: #e9eac6; }
+  body * {
+    box-sizing: border-box; }
+
+a {
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 2px solid #7bbb40; }
+
+header {
+  margin: 3em 15% 3em 15%; }
+  header h1 {
+    font-size: 2rem; }
+  header h2 {
+    font-size: 1rem;
+    font-weight: normal; }
+
+main {
+  margin: 3em 15% 3em 15%; }
+  main nav {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0; }
+  main svg#text_line {
+    position: absolute;
+    top: 0;
+    left: 0; }
+
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInN0eWxlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBSUE7RUFDRSxzQ0FBcUM7RUFDckMsa0JBQWlCO0VBQ2pCLDBCQUF5QjtFQUN6QixzQkFBcUI7RUFDckIsVUFBUztFQUNULGVBVGU7RUFVZiwwQkFUYSxFQUFBO0VBV2I7SUFDRSx1QkFBc0IsRUFBQTs7QUFJMUI7RUFDRSxzQkFBcUI7RUFDckIsZUFBYztFQUNkLGlDQUFrQyxFQUFBOztBQUdwQztFQUVFLHdCQUF1QixFQUFBO0VBRXZCO0lBQ0UsZ0JBQWUsRUFBQTtFQUdqQjtJQUNFLGdCQUFlO0lBQ2Ysb0JBQW1CLEVBQUE7O0FBSXZCO0VBQ0Usd0JBQXVCLEVBQUE7RUFFdkI7SUFDRSx5QkFBZ0I7SUFBaEIsaUJBQWdCO0lBQ2hCLE9BQU0sRUFBQTtFQUdSO0lBQ0UsbUJBQWtCO0lBQ2xCLE9BQU07SUFDTixRQUFPLEVBQUEiLCJmaWxlIjoic3R5bGVfcHJlZml4ZWQuY3NzIn0= */

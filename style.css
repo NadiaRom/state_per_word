@@ -1,0 +1,35 @@
+body {
+  font-family: 'Inconsolata', monospace;
+  line-height: 1.75;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  margin: 0;
+  color: #2b2c3b;
+  background-color: #e9eac6; }
+  body * {
+    box-sizing: border-box; }
+
+a {
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 2px solid #7bbb40; }
+
+header {
+  margin: 3em 15% 3em 15%; }
+  header h1 {
+    font-size: 2rem; }
+  header h2 {
+    font-size: 1rem;
+    font-weight: normal; }
+
+main {
+  margin: 3em 15% 3em 15%; }
+  main nav {
+    position: sticky;
+    top: 0; }
+  main svg#text_line {
+    position: absolute;
+    top: 0;
+    left: 0; }
+
+/*# sourceMappingURL=style.css.map */
