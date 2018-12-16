@@ -43,14 +43,54 @@ d3.json('ru_states_per_word.json')
                 return $(this).closest('article').width();
             });
 
-        let span_coords = {};
+        let span_coords = [];
         const draw_canvas = function () {
-            let article_offset = $('main article').offset();
-            $('main article span').each(function () {
-                debugger;
-                $(this)
+            let canvas_offset = $(canvas.node()).offset();
+            span_coords = $('main article span')
+                .map(function (i) {
+                    let $t = $(this);
+                    return {...$t.offset(), width: $t.width(), height: $t.height(), i: i};
+                });
+            span_coords = d3.nest()
+                .key(d => d.top)
+                .entries(span_coords);
+
+            const context = canvas.node().getContext('2d');
+            let cw = +canvas.attr('width'), ch = +canvas.attr('height');
+            let line_h = +span_coords[1].key - +span_coords[0].key;
+            const scale_h = d3.scaleLinear()
+                .range([line_h, 0])
+                .domain([-1, 1]); // distribution of state weights
+
+            const line = d3.line()
+                .x(d => d.x)
+                .y(d => scale_h(d.y) + d.y_off)
+                .curve(d3.curveStep)
+                .context(context);
+
+            span_coords.map(function(val) {
+                let top_offset = +val.key - canvas_offset.top;
+                // for (let i = 0; i < 400; i++) {
+                //    
+                // }
+                let dat = [];
+                val.values.map(function (d) {
+                    dat.push({
+                        x: d.left + d.width / 2 - canvas_offset.left,
+                        y: +data[active_doc].states_per_word[d.i][1],
+                        y_off: top_offset,
+                    })
+                });
+
+                context.beginPath();
+                line(dat);
+                context.lineWidth = 1.5;
+                context.strokeStyle = "steelblue";
+                context.stroke();
             })
         };
+
+        draw_canvas();
 
 
         $('button.sel_article').click(function () {
