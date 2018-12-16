@@ -1,0 +1,29 @@
+{
+  "name": "state_per_word",
+  "version": "1.0.0",
+  "description": "node modules to visualize LSTM states for words",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NadiaRom/state_per_word.git"
+  },
+  "keywords": [
+    "d3",
+    "LSTM",
+    "NLP"
+  ],
+  "author": "Nadiia Romanenko",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/NadiaRom/state_per_word/issues"
+  },
+  "homepage": "https://github.com/NadiaRom/state_per_word#readme",
+  "dependencies": {
+    "d3": "^5.7.0",
+    "jquery": "^3.3.1",
+    "tippy.js": "^3.3.0"
+  }
+}
