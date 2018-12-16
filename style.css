@@ -22,14 +22,34 @@ header {
     font-size: 1rem;
     font-weight: normal; }
 
-main {
-  margin: 3em 15% 3em 15%; }
-  main nav {
-    position: sticky;
-    top: 0; }
-  main svg#text_line {
-    position: absolute;
-    top: 0;
-    left: 0; }
+main nav {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: space-around;
+  padding: 1em 15% 1em 15%;
+  background-color: #e9eac6;
+  border-bottom: 1px solid #6c6e94; }
+  main nav button.sel_article {
+    background-color: #dbdca1;
+    border-radius: 0;
+    border: 1px solid #6c6e94;
+    padding: 0.25em;
+    transition: all 0.5s; }
+  main nav button.sel_article.active {
+    background-color: #c5c869;
+    font-weight: 800;
+    border-radius: 0;
+    border: 1px solid #565876;
+    padding: 0.25em; }
+main article {
+  margin: 3em 15% 3em 15%;
+  line-height: 3; }
+  main article span {
+    margin: 0 1em 0 0;
+    font-size: 0.75em; }
+  main article canvas#text_line {
+    position: absolute; }
 
 /*# sourceMappingURL=style.css.map */
