@@ -15,16 +15,24 @@ d3.json('states_data/file_index.json')
             .text(d => d.html_id)
             .attr('title', d => d.ra_title);
 
-        $('nav').append(`<span id=selected_state></span>`);
+        $('nav').append(`<select id=selected_state></select>`);
+        d3.select('#selected_state')
+            .selectAll('option')
+            .data([...Array(400).keys()])
+            .enter()
+            .append('option')
+            .attr('value', d => `act${d}`)
+            .text(d => d);
+
 
         $('button.sel_article').first().addClass('active');
 
         const update_viz = function () {
             const active_doc = $('button.sel_article.active').text();
-            $('main article span').remove();
-            $('svg > *').remove();
             d3.json(`states_data/${active_doc}.json`)
                 .then(function (data) {
+                    $('main article span').remove();
+                    $('svg > *').remove();
                     data.states_per_word = data.states_per_word.slice(3);
                     var spans = d3.select('main article')
                         .selectAll('span')
@@ -75,20 +83,16 @@ d3.json('states_data/file_index.json')
 
                     let activation_paths =  lines.selectAll('path')
                         .data(function (dat) {
-                            let new_data = [];
-                            for (let j = 1; j < 401; j++) {
-                                new_data.push(
-                                    dat.values.map(function (d) {
-                                        return {
-                                            'y': data.states_per_word[d.i][j],
-                                            'x': d.left - svg_offset.left,
-                                            'i': d.i,
-                                            'j': j,
-                                        }
-                                    })
-                                )
-                            }
-                            return new_data;
+                            return [...Array(400).keys()].map(function (j) {
+                                return dat.values.map(function (d) {
+                                    return {
+                                        'y': data.states_per_word[d.i][j+1],
+                                        'x': d.left - svg_offset.left,
+                                        'i': d.i,
+                                        'j': j+1,
+                                    }
+                                })
+                            });
                         })
                         .enter()
                         .append('path')
@@ -98,8 +102,13 @@ d3.json('states_data/file_index.json')
                             let cl = $(this).attr('class');
                             $('svg path').removeClass('active');
                             $(`path.${cl}`).addClass('active');
-                            $('#selected_state').text(cl.match(/[0-9]+/)[0])
+                            $('#selected_state').val(cl);
                         });
+
+                    $('#selected_state').change(function() {
+                        $('svg path').removeClass('active');
+                        $(`path.${$(this).val()}`).addClass('active');
+                    });
                 });
         };
 
