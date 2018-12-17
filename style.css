@@ -1,8 +1,6 @@
 body {
   font-family: 'Inconsolata', monospace;
   line-height: 1.75;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
   margin: 0;
   color: #2b2c3b;
   background-color: #e9eac6; }
@@ -12,7 +10,7 @@ body {
 a {
   text-decoration: none;
   color: inherit;
-  border-bottom: 2px solid #7bbb40; }
+  border-bottom: 2px solid #6ebb09; }
 
 header {
   margin: 3em 15% 3em 15%; }
@@ -43,13 +41,27 @@ main nav {
     border-radius: 0;
     border: 1px solid #565876;
     padding: 0.25em; }
+  main nav span#selected_state {
+    background: #a7a8bf;
+    padding: 0 0.5em 0 0.5em; }
 main article {
   margin: 3em 15% 3em 15%;
   line-height: 3; }
   main article span {
-    margin: 0 1em 0 0;
-    font-size: 0.75em; }
-  main article canvas#text_line {
-    position: absolute; }
+    pointer-events: none;
+    font-size: 0.75em;
+    z-index: 1; }
+  main article svg#text_line {
+    position: absolute;
+    overflow: visible; }
+    main article svg#text_line path {
+      fill: none;
+      stroke: #978aa2;
+      opacity: 0.15;
+      transition: all 0.25s; }
+    main article svg#text_line path:hover, main article svg#text_line path.active {
+      stroke: #6ebb09;
+      opacity: 1;
+      stroke-width: 3px; }
 
 /*# sourceMappingURL=style.css.map */

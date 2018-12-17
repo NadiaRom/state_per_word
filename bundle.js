@@ -3,7 +3,7 @@ const d3 = require('d3');
 const $ = require('jquery');
 const tippy = require('tippy.js');
 
-const canvas = d3.select('canvas#text_line');
+const svg = d3.select('svg#text_line');
 
 d3.json('ru_states_per_word.json')
     .then(function (data) {
@@ -19,6 +19,8 @@ d3.json('ru_states_per_word.json')
             .append('button')
             .classed('sel_article', true)
             .text((d) => d);
+
+        $('nav').append(`<span id=selected_state></span>`);
         
         $('button.sel_article').first().addClass('active');
 
@@ -31,11 +33,11 @@ d3.json('ru_states_per_word.json')
                 .data(data[active_doc].states_per_word)
                 .enter()
                 .append('span')
-                .text(d => d[0]);
+                .text(d => d[0] + '  ');
         };
 
         draw_text();
-        canvas
+        svg
             .attr('height',  function () {
                 return $(this).closest('article').height();
             })
@@ -44,8 +46,9 @@ d3.json('ru_states_per_word.json')
             });
 
         let span_coords = [];
-        const draw_canvas = function () {
-            let canvas_offset = $(canvas.node()).offset();
+        const draw_svg = function () {
+            $('svg > *').remove()
+            let svg_offset = $(svg.node()).offset();
             span_coords = $('main article span')
                 .map(function (i) {
                     let $t = $(this);
@@ -55,42 +58,57 @@ d3.json('ru_states_per_word.json')
                 .key(d => d.top)
                 .entries(span_coords);
 
-            const context = canvas.node().getContext('2d');
-            let cw = +canvas.attr('width'), ch = +canvas.attr('height');
+            let w = +svg.attr('width'), h = +svg.attr('height');
             let line_h = +span_coords[1].key - +span_coords[0].key;
+            let span_h = $('main article span').first().height();
             const scale_h = d3.scaleLinear()
                 .range([line_h, 0])
-                .domain([-1, 1]); // distribution of state weights
+                .domain([-1, 1])
+                .clamp(true); // distribution of state weights
 
             const line = d3.line()
                 .x(d => d.x)
-                .y(d => scale_h(d.y) + d.y_off)
-                .curve(d3.curveStep)
-                .context(context);
+                .y(d => scale_h(d.y))
+                .curve(d3.curveStepBefore);
 
-            span_coords.map(function(val) {
-                let top_offset = +val.key - canvas_offset.top;
-                // for (let i = 0; i < 400; i++) {
-                //    
-                // }
-                let dat = [];
-                val.values.map(function (d) {
-                    dat.push({
-                        x: d.left + d.width / 2 - canvas_offset.left,
-                        y: +data[active_doc].states_per_word[d.i][1],
-                        y_off: top_offset,
-                    })
+            let lines = svg.selectAll('g.line')
+                .data(span_coords)
+                .enter()
+                .append('g')
+                .classed('line', true)
+                .attr('transform', d => `translate(0,${+d.key - svg_offset.top - line_h + span_h*1.5})`);
+
+            let activation_paths =  lines.selectAll('path')
+                // .data(d => d.values.map(v => data[active_doc].states_per_word[v.i].slice(1)))
+                .data(function (dat) {
+                    let new_data = [];
+                    for (let j = 1; j < 401; j++) {
+                        new_data.push(
+                            dat.values.map(function (d) {
+                                return {
+                                    'y': data[active_doc].states_per_word[d.i][j],
+                                    'x': d.left - svg_offset.left,
+                                    'i': d.i,
+                                    'j': j,
+                                }
+                            })
+                        )
+                    }
+                    return new_data;
+                })
+                .enter()
+                .append('path')
+                .attr('class', (_, i) => `act${i}`)
+                .attr('d', line)
+                .on('click', function () {
+                    let cl = $(this).attr('class');
+                    $('svg path').removeClass('active');
+                    $(`path.${cl}`).addClass('active');
+                    $('#selected_state').text(cl.match(/[0-9]+/)[0])
                 });
-
-                context.beginPath();
-                line(dat);
-                context.lineWidth = 1.5;
-                context.strokeStyle = "steelblue";
-                context.stroke();
-            })
         };
 
-        draw_canvas();
+        draw_svg();
 
 
         $('button.sel_article').click(function () {
@@ -99,13 +117,15 @@ d3.json('ru_states_per_word.json')
             active_doc = $('button.sel_article.active').text();
             draw_text();
 
-            canvas
+            svg
                 .attr('height',  function () {
                     return $(this).closest('article').height();
                 })
                 .attr('width', function () {
                     return $(this).closest('article').width();
                 });
+
+            draw_svg();
         })
         
     });

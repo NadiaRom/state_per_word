@@ -5,13 +5,13 @@
     <title>Check LSTM state</title>
 
     <link href="https://fonts.googleapis.com/css?family=Inconsolata|Yanone+Kaffeesatz" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
+    <link href="style_prefixed.css" rel="stylesheet">
 </head>
 <body>
 
 <header>
     <h1>Краще зрозуміти класифікатор</h1>
-    <h2>На кожне слово класифікатор з <a href="https://github.com/texty/manipulative_news_methodology" target="_blank">проекту про маніпулятивні новини</a> дає свій внутрішній стан. Це вектор з 400 чисел. Ця візуалізація має допомогти побачити, на яких місцях в тексті класифікатор суттєво змінює стейт.</h2>
+    <h2>На кожне слово класифікатор з <a href="https://github.com/texty/manipulative_news_methodology" target="_blank">проекту про маніпулятивні новини</a> дає свій внутрішній стан. Це вектор з 400 чисел. Візуалізація має допомогти побачити, на яких місцях в тексті класифікатор суттєво змінює стейт.</h2>
 </header>
 
 <main>
@@ -19,7 +19,7 @@
 
     </nav>
     <article>
-        <canvas id="text_line"></canvas>
+        <svg id="text_line"></svg>
     </article>
 </main>
 
