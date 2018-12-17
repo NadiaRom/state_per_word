@@ -46,7 +46,7 @@ d3.json('ru_states_per_word.json')
 
         let span_coords = [];
         const draw_svg = function () {
-            $('svg > *').remove()
+            $('svg > *').remove();
             let svg_offset = $(svg.node()).offset();
             span_coords = $('main article span')
                 .map(function (i) {
