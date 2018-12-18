@@ -32,7 +32,7 @@ d3.json('states_data/file_index.json')
         $('nav').append(`<select id=highlight_state></select>`);
         d3.select('#highlight_state')
             .selectAll('option')
-            .data([45, 179, 196, 66])
+            .data([333, 348, 45, 179, 196, 66])
             .enter()
             .append('option')
             .attr('value', d => d)
@@ -62,11 +62,10 @@ d3.json('states_data/file_index.json')
                         .attr('width', function () {
                             return $(this).closest('article').width();
                         });
-
-                    let span_coords = [];
+                    
                     let svg_offset = $(svg.node()).offset();
 
-                    span_coords = $('main article span')
+                    let span_coords = $('main article span')
                         .map(function (i) {
                             let $t = $(this);
                             return {...$t.offset(), width: $t.width(), height: $t.height(), i: i};
@@ -86,7 +85,7 @@ d3.json('states_data/file_index.json')
                     const line = d3.line()
                         .x(d => d.x)
                         .y(d => scale_h(d.y))
-                        .curve(d3.curveStepAfter);
+                        .curve(d3.curveStepBefore);
 
                     let lines = svg.selectAll('g.line')
                         .data(span_coords)
@@ -98,14 +97,21 @@ d3.json('states_data/file_index.json')
                     let activation_paths =  lines.selectAll('path')
                         .data(function (dat) {
                             return [...Array(400).keys()].map(function (j) {
-                                return dat.values.map(function (d) {
-                                    return {
-                                        'y': data.states_per_word[d.i][j+1],
-                                        'x': d.left - svg_offset.left,
-                                        'i': d.i,
-                                        'j': j+1,
-                                    }
-                                })
+                                return [{
+                                    'y': data.states_per_word[dat.values[0].i][j+1],
+                                    'x': dat.values[0].left - svg_offset.left,
+                                    'i': dat.values[0].i,
+                                    'j': j+1,
+                                }].concat(
+                                    dat.values.map(function (d) {
+                                        return {
+                                            'y': data.states_per_word[d.i][j+1],
+                                            'x': d.left + d.width - svg_offset.left,
+                                            'i': d.i,
+                                            'j': j+1,
+                                        }
+                                    })
+                                )
                             });
                         })
                         .enter()
