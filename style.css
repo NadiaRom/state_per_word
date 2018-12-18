@@ -3,7 +3,7 @@ body {
   line-height: 1.75;
   margin: 0;
   color: #2b2c3b;
-  background-color: #e9eac6; }
+  background-color: #ececec; }
   body * {
     box-sizing: border-box; }
 
@@ -27,16 +27,16 @@ main nav {
   display: flex;
   justify-content: space-around;
   padding: 1em 15% 1em 15%;
-  background-color: #e9eac6;
+  background-color: #ececec;
   border-bottom: 1px solid #6c6e94; }
   main nav button.sel_article {
-    background-color: #dbdca1;
+    background-color: lightgray;
     border-radius: 0;
     border: 1px solid #6c6e94;
     padding: 0.25em;
     transition: all 0.5s; }
   main nav button.sel_article.active {
-    background-color: #c5c869;
+    background-color: #acacac;
     font-weight: 800;
     border-radius: 0;
     border: 1px solid #565876;

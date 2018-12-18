@@ -1,6 +1,11 @@
 const d3 = require('d3');
 const $ = require('jquery');
 const tippy = require('tippy.js');
+const chroma = require('chroma-js');
+
+const span_scale = chroma.scale(['#5c98ff', '#fff','#ff3e17'])
+    .mode('lch')
+    .domain([-0.8, 0.8]);
 
 const svg = d3.select('svg#text_line');
 
@@ -22,6 +27,15 @@ d3.json('states_data/file_index.json')
             .enter()
             .append('option')
             .attr('value', d => `act${d}`)
+            .text(d => d);
+
+        $('nav').append(`<select id=highlight_state></select>`);
+        d3.select('#highlight_state')
+            .selectAll('option')
+            .data([45, 179, 196, 66])
+            .enter()
+            .append('option')
+            .attr('value', d => d)
             .text(d => d);
 
 
@@ -108,6 +122,16 @@ d3.json('states_data/file_index.json')
                     $('#selected_state').change(function() {
                         $('svg path').removeClass('active');
                         $(`path.${$(this).val()}`).addClass('active');
+                    });
+
+                    $('#highlight_state').change(function() {
+                        let i_state = $(this).val();
+                        $('article span').css('background-color', function () {
+                            return span_scale(
+                                d3.select(this)
+                                    .datum()[+i_state + 1]
+                            );
+                        });
                     });
                 });
         };
