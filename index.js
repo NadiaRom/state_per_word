@@ -86,7 +86,7 @@ d3.json('states_data/file_index.json')
                     const line = d3.line()
                         .x(d => d.x)
                         .y(d => scale_h(d.y))
-                        .curve(d3.curveStepBefore);
+                        .curve(d3.curveStepAfter);
 
                     let lines = svg.selectAll('g.line')
                         .data(span_coords)
